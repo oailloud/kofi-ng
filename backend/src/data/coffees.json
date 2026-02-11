@@ -1,0 +1,23 @@
+[
+  {
+    "id": "espresso",
+    "name": "Classic Espresso",
+    "description": "Rich and intense single-shot espresso with a smooth crema.",
+    "origin": "Italy",
+    "price": 2.5
+  },
+  {
+    "id": "latte",
+    "name": "Vanilla Latte",
+    "description": "Double shot of espresso with steamed milk and vanilla syrup.",
+    "origin": "Brazil / Colombia blend",
+    "price": 3.8
+  },
+  {
+    "id": "cold-brew",
+    "name": "Cold Brew",
+    "description": "Slow-steeped coarse-ground coffee served over ice.",
+    "origin": "Ethiopia",
+    "price": 4.0
+  }
+]
