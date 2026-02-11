@@ -9,4 +9,12 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('kofi');
+
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.title.set('kofi 2');
+    }, 1000);
+  }
+  
 }

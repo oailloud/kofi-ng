@@ -1,0 +1,9 @@
+<ul>
+    @for (coffee of coffees(); track coffee.id) {
+        <li>{{ coffee.name }}</li>
+    }
+</ul>
+
+<div>
+     <app-update-form [updatedIndex]="1" (onUpdatedForm)="updateName($event)" />
+</div>
