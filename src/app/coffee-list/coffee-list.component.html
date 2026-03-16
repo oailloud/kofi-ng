@@ -32,9 +32,11 @@
       <label class="control">
         <span class="control__label">Sort by</span>
         <select (change)="onSortChange($any($event.target).value)">
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="name">Name</option>
+          @for (sortOption of sortingOptions | keyvalue; track sortOption.key) {
+            <option [selected]="sortOption.key === sortBy()" [value]="sortOption.key">
+              {{ sortOption.value }}
+            </option>
+          }
         </select>
       </label>
     </div>
@@ -93,7 +95,7 @@
 
           <footer class="coffee-card__footer">
             <span class="coffee-card__price">
-              {{ coffee.price | currency : 'USD' : 'symbol' : '1.0-2' }}
+              {{ coffee.price | currency: 'USD' : 'symbol' : '1.0-2' }}
             </span>
             <button class="coffee-card__button" type="button">View details</button>
           </footer>

@@ -2,17 +2,20 @@ import { Component, computed, effect, inject, signal } from '@angular/core';
 import { CatalogService } from '../services/catalog';
 import { Coffee } from '../types/coffees';
 import { MOCK_COFFEES } from '../mock/coffee-mock-data';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, KeyValuePipe } from '@angular/common';
+import { SORTING, SORTING_LABELS } from './coffee-list.constants';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-coffee-list',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, KeyValuePipe],
   templateUrl: './coffee-list.component.html',
   styleUrl: './coffee-list.component.scss'
 })
 export class CoffeeListComponent {
+
+  protected sortingOptions = SORTING_LABELS
 
   // flag to enable/disable the mocked data
   protected useMockDataOnly = signal(true);
@@ -21,7 +24,7 @@ export class CoffeeListComponent {
 
   protected searchTerm = signal('');
   protected selectedOrigin = signal<string | 'all'>('all');
-  protected sortBy = signal<'price-asc' | 'price-desc' | 'name'>('price-asc');
+  protected sortBy = signal<SORTING>('price-asc');
 
   private backendSubscription: Subscription | null = null;
 
@@ -95,6 +98,7 @@ export class CoffeeListComponent {
   }
 
   protected onSortChange(value: string) {
+    console.log('value', value)
     this.sortBy.set(value as 'price-asc' | 'price-desc' | 'name');
   }
 
