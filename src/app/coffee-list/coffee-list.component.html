@@ -1,9 +1,106 @@
-<ul>
-    @for (coffee of coffees(); track coffee.id) {
-        <li>{{ coffee.name }}</li>
-    }
-</ul>
+<section class="coffee-page">
+  <header class="coffee-page__header">
+    <h1 class="coffee-page__title">All coffees</h1>
+    <p class="coffee-page__subtitle">
+      Browse a selection of specialty coffees. Use search and filters to narrow things down.
+    </p>
+  </header>
 
-<div>
-     <app-update-form [updatedIndex]="1" (onUpdatedForm)="updateName($event)" />
-</div>
+  <section class="coffee-page__controls">
+    <div class="coffee-page__controls-left">
+      <label class="control control--search">
+        <span class="control__label">Search</span>
+        <input
+          type="search"
+          placeholder="Search by coffee or roaster"
+          (input)="onSearchChange($any($event.target).value)"
+        />
+      </label>
+
+      <label class="control">
+        <span class="control__label">Origin</span>
+        <select (change)="onOriginChange($any($event.target).value)">
+          <option value="all">All origins</option>
+          <option value="Colombia">Colombia</option>
+          <option value="Ethiopia">Ethiopia</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Guatemala">Guatemala</option>
+          <option value="Kenya">Kenya</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="coffee-page__controls-right">
+      <label class="control">
+        <span class="control__label">Sort by</span>
+        <select (change)="onSortChange($any($event.target).value)">
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <section class="coffee-page__grid">
+    @if (coffees().length === 0) {
+      <div class="coffee-page__empty">
+        <p>No coffees match your current filters.</p>
+      </div>
+    } @else {
+      @for (coffee of coffees(); track coffee.id) {
+        <article class="coffee-card">
+          <div class="coffee-card__image-wrapper">
+            <img
+              class="coffee-card__image"
+              [src]="coffee.imageUrl || 'https://placehold.co/400x400?text=Coffee'"
+              [alt]="coffee.name"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="coffee-card__body">
+            <h2 class="coffee-card__title">
+              {{ coffee.name }}
+            </h2>
+            @if (coffee.roaster) {
+              <p class="coffee-card__roaster">
+                {{ coffee.roaster }}
+              </p>
+            }
+
+            <p class="coffee-card__meta">
+              <span class="coffee-card__origin">{{ coffee.origin }}</span>
+              @if (coffee.process) {
+                <span class="coffee-card__separator">•</span>
+                <span class="coffee-card__process">{{ coffee.process }}</span>
+              }
+              @if (coffee.roastLevel) {
+                <span class="coffee-card__separator">•</span>
+                <span class="coffee-card__roast">{{ coffee.roastLevel }}</span>
+              }
+              @if (coffee.isDecaf) {
+                <span class="coffee-card__tag coffee-card__tag--decaf">Decaf</span>
+              }
+            </p>
+
+            @if (coffee.tastingNotes?.length) {
+              <ul class="coffee-card__notes">
+                @for (note of coffee.tastingNotes?.slice(0, 3) ?? []; track note) {
+                  <li class="coffee-card__note">{{ note }}</li>
+                }
+              </ul>
+            }
+          </div>
+
+          <footer class="coffee-card__footer">
+            <span class="coffee-card__price">
+              {{ coffee.price | currency : 'USD' : 'symbol' : '1.0-2' }}
+            </span>
+            <button class="coffee-card__button" type="button">View details</button>
+          </footer>
+        </article>
+      }
+    }
+  </section>
+</section>
