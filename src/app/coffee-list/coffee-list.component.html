@@ -21,11 +21,9 @@
         <span class="control__label">Origin</span>
         <select (change)="onOriginChange($any($event.target).value)">
           <option value="all">All origins</option>
-          <option value="Colombia">Colombia</option>
-          <option value="Ethiopia">Ethiopia</option>
-          <option value="Brazil">Brazil</option>
-          <option value="Guatemala">Guatemala</option>
-          <option value="Kenya">Kenya</option>
+          @for (origin of origins(); track origin) {
+            <option [value]="origin">{{ origin }}</option>
+          }
         </select>
       </label>
     </div>

@@ -36,6 +36,10 @@ export class CoffeeListComponent {
     return [...backend];
   });
 
+  protected origins = computed<string[]>(() =>
+    [...new Set(this.baseCoffees().map((c) => c.origin))].sort()
+  );
+
   protected coffees = computed<Coffee[]>(() => {
     let list = [...this.baseCoffees()];
 
